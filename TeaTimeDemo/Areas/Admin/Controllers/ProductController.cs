@@ -10,8 +10,9 @@ using TeaTimeDemo.Utility;
 namespace TeaTimeDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
-    public class ProductController : Controller
+	// 本次修改部分
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Manager)]
+	public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;

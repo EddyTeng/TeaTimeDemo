@@ -124,13 +124,13 @@ namespace TeaTimeDemo.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
+            /*if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Manager)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-            }
+            }*/
 
             Input = new()
             {
@@ -200,7 +200,15 @@ namespace TeaTimeDemo.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        // 本次新增部分
+                        if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Manager))
+                        {
+                            TempData["success"] = "建立新使用者成功";
+                        }
+                        else
+                        {
+							await _signInManager.SignInAsync(user, isPersistent: false);
+						}
                         return LocalRedirect(returnUrl);
                     }
                 }

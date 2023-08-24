@@ -4,7 +4,13 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!-- 本次修改部分-->
+@if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Manager))
+{
+    <h1 class="pt-4">註冊管理者帳號</h1>
+}else{
+    <h1>@ViewData["Title"]</h1>
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -42,19 +48,24 @@
                 <label asp-for="Input.Address">Address</label>
                 <span asp-validation-for="Input.Address" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                    <option disabled selected>-Select Role-</option>
-                </select>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.StoreId" style="display:none" asp-items="@Model.Input.StoreList" class="form-select">
-                    <option disabled selected>-Select Store-</option>
-                </select>
-            </div>
+            <!-- 本次修改部分-->
+            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Manager))
+            {
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                        <option disabled selected>-Select Role-</option>
+                    </select>
+                </div>
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.StoreId" style="display:none" asp-items="@Model.Input.StoreList" class="form-select">
+                        <option disabled selected>-Select Store-</option>
+                    </select>
+                </div>
+            }
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
+    
     <div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to register.</h3>
