@@ -51,7 +51,8 @@ namespace TeaTimeDemo.DataAccess.DbInitializer
 					Email = "admin@gmail.com",
 					Name = "Administrator",
 					PhoneNumber = "0911111111",
-					Address = "test address 123"
+					Address = "test address 123",
+					EmailConfirmed = true
 				}, "Admin123*").GetAwaiter().GetResult();
 
 				ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@gmail.com");
